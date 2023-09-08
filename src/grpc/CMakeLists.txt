@@ -25,7 +25,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 add_library(
-  grpc-endpoint-library EXCLUDE_FROM_ALL
+  grpc-endpoint-library STATIC EXCLUDE_FROM_ALL
   grpc_server.cc
   grpc_server.h
   grpc_handler.h
@@ -104,7 +104,7 @@ if(${TRITON_ENABLE_GPU})
   target_link_libraries(
     grpc-endpoint-library
     PUBLIC
-      CUDA::cudart
+      CUDA::cudart_static
   )
 endif() # TRITON_ENABLE_GPU
 

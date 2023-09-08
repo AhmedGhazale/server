@@ -40,17 +40,17 @@ include(FetchContent)
 
 FetchContent_Declare(
   repo-common
-  GIT_REPOSITORY https://github.com/triton-inference-server/common.git
+  GIT_REPOSITORY https://github.com/AhmedGhazale/common.git
   GIT_TAG ${TRITON_COMMON_REPO_TAG}
 )
 FetchContent_Declare(
   repo-core
-  GIT_REPOSITORY https://github.com/triton-inference-server/core.git
+  GIT_REPOSITORY https://github.com/AhmedGhazale/core.git
   GIT_TAG ${TRITON_CORE_REPO_TAG}
 )
 FetchContent_Declare(
   repo-backend
-  GIT_REPOSITORY https://github.com/triton-inference-server/backend.git
+  GIT_REPOSITORY https://github.com/AhmedGhazale/backend.git
   GIT_TAG ${TRITON_BACKEND_REPO_TAG}
 )
 
@@ -179,7 +179,7 @@ if(${TRITON_ENABLE_GPU})
   target_link_libraries(
     main
     PRIVATE
-      CUDA::cudart
+      CUDA::cudart_static
   )
 endif() # TRITON_ENABLE_GPU
 
@@ -349,7 +349,7 @@ if(${TRITON_ENABLE_HTTP}
   endif() # TRITON_ENABLE_VERTEX_AI
 
   add_library(
-    http-endpoint-library EXCLUDE_FROM_ALL
+    http-endpoint-library STATIC EXCLUDE_FROM_ALL
     ${HTTP_ENDPOINT_SRCS} ${HTTP_ENDPOINT_HDRS}
   )
 
@@ -411,7 +411,7 @@ if(${TRITON_ENABLE_HTTP}
     target_link_libraries(
       http-endpoint-library
       PUBLIC
-        CUDA::cudart
+        CUDA::cudart_static
     )
   endif() # TRITON_ENABLE_GPU
 
@@ -503,7 +503,7 @@ if(${TRITON_ENABLE_TRACING})
   message(STATUS "Using tracing ${TRITON_TRACE_INSTALL_PATH}")
 
   add_library(
-    tracing-library EXCLUDE_FROM_ALL
+    tracing-library STATIC EXCLUDE_FROM_ALL
     tracer.cc tracer.h
   )
 
@@ -544,7 +544,7 @@ if(${TRITON_ENABLE_TRACING})
     target_link_libraries(
       tracing-library
       PUBLIC
-        CUDA::cudart
+        CUDA::cudart_static
     )
   endif() # TRITON_ENABLE_GPU
 
@@ -639,7 +639,7 @@ if (NOT WIN32)
     target_link_libraries(
       simple
       PRIVATE
-        CUDA::cudart
+        CUDA::cudart_static
     )
   endif() # TRITON_ENABLE_GPU
 
@@ -703,7 +703,7 @@ if (NOT WIN32)
     target_link_libraries(
       multi_server
       PRIVATE
-        CUDA::cudart
+        CUDA::cudart_static
     )
   endif() # TRITON_ENABLE_GPU
 
@@ -762,7 +762,7 @@ if (NOT WIN32)
         triton-common-error             # from repo-common
         triton-core-serverapi           # from repo-core
         triton-core-serverstub          # from repo-core
-        CUDA::cudart
+        CUDA::cudart_static
       )
 
     install(
