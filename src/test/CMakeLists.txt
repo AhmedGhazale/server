@@ -42,7 +42,7 @@ if(${TRITON_ENABLE_TENSORRT})
     PRIVATE
       -lnvinfer
       -lnvcaffe_parser
-      CUDA::cudart
+      CUDA::cudart_static
   )
 
   install(
